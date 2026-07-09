@@ -426,6 +426,42 @@
     };
 
     // ==========================================
+    // FUNGSI AUTO-GENERATE NOMOR & TANGGAL
+    // ==========================================
+
+    window.setAutoNumberAndDate = function() {
+      // 1. Set Tanggal Hari Ini sebagai Default di Form
+      const today = new Date().toISOString().split('T')[0];
+      if (!document.getElementById('sm-tgl').value) document.getElementById('sm-tgl').value = today;
+      if (!document.getElementById('sk-tgl').value) document.getElementById('sk-tgl').value = today;
+
+      // 2. Auto-Generate No. Surat Keluar
+      const now = new Date();
+      const year = now.getFullYear();
+      const romans = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+      const monthRomawi = romans[now.getMonth()]; // Mendapatkan bulan Romawi
+
+      let maxSeq = 0;
+      
+      // Mencari nomor urut tertinggi di tahun ini dari data arsip
+      dataKeluar.forEach(row => {
+        if (row.noSurat && row.noSurat.includes(`/${year}`)) {
+          const parts = row.noSurat.split('/');
+          const seqNum = parseInt(parts[0], 10);
+          if (!isNaN(seqNum) && seqNum > maxSeq) {
+            maxSeq = seqNum;
+          }
+        }
+      });
+
+      // Menambahkan 1 dari urutan terakhir, format 3 digit (contoh: 001, 002)
+      const nextSeq = String(maxSeq + 1).padStart(3, '0');
+      
+      // Menuliskan ke Input Text Surat Keluar
+      document.getElementById('sk-nosurat').value = `${nextSeq}/517/AJI/${monthRomawi}/${year}`;
+    };
+
+    // ==========================================
     // LOGIKA API GOOGLE SHEETS
     // ==========================================
 
@@ -496,6 +532,9 @@
         
         renderTabelMasuk();
         renderTabelKeluar();
+
+        // Panggil auto-generate setelah data arsip berhasil diambil
+        setAutoNumberAndDate();
       } catch (err) {
         console.error("Error Fetch:", err);
         document.getElementById('loadingMasuk').innerHTML = "<span class='text-red-500'>Gagal memuat data dari Google Sheets. Pastikan URL benar.</span>";
@@ -527,7 +566,7 @@
         });
         e.target.reset();
         showToast('Surat Masuk berhasil disimpan');
-        fetchSemuaData(); // Reload tabel
+        fetchSemuaData(); // Reload tabel & akan update auto-number
       } catch(err) {
         showToast('Gagal menyimpan ke server', 'error');
       } finally {
@@ -559,7 +598,7 @@
         });
         e.target.reset();
         showToast('Surat Keluar berhasil disimpan');
-        fetchSemuaData();
+        fetchSemuaData(); // Reload tabel & update nomor selanjutnya
       } catch(err) {
         showToast('Gagal menyimpan ke server', 'error');
       } finally {
@@ -600,7 +639,10 @@
     });
 
     // Mulai Ambil Data saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', fetchSemuaData);
+    document.addEventListener('DOMContentLoaded', () => {
+      setAutoNumberAndDate(); // Set data awal sambil menunggu loading
+      fetchSemuaData();
+    });
 
   </script>
 </body>

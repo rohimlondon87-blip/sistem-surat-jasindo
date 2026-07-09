@@ -8,7 +8,11 @@
   <style>
     /* Styling khusus untuk cetakan (Print) */
     @media print {
-      body { background: white; font-family: "Times New Roman", Times, serif; }
+      @page {
+        size: A4 portrait;
+        margin: 1.5cm;
+      }
+      body { background: white; font-family: "Times New Roman", Times, serif; font-size: 12px; }
       .no-print { display: none !important; }
       .print-only { display: block !important; }
       
@@ -16,20 +20,23 @@
         width: 100%;
         margin: 0;
         padding: 0;
+        height: 14.5cm; /* Membatasi tinggi agar tepat setengah kertas A4 */
+        overflow: hidden;
       }
       .print-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
+        margin-top: 10px;
       }
       .print-table th, .print-table td {
         border: 1px solid black;
-        padding: 8px;
+        padding: 4px; /* Padding tabel diperkecil */
         text-align: left;
+        font-size: 11px; /* Font tabel diperkecil */
       }
-      .print-header { text-align: center; margin-bottom: 20px; }
-      .print-header h3 { margin: 0; font-size: 18px; }
-      .print-header p { margin: 0; font-size: 16px; font-weight: bold; }
+      .print-header { text-align: center; margin-bottom: 12px; }
+      .print-header h3 { margin: 0; font-size: 15px; }
+      .print-header p { margin: 0; font-size: 13px; font-weight: bold; }
     }
     
     /* Sembunyikan area cetak di layar biasa */
@@ -90,10 +97,14 @@
               <label class="block text-sm font-medium text-slate-700 mb-1">Perihal</label>
               <input type="text" id="sm-perihal" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
-            <div class="md:col-span-2 flex gap-3 pt-2">
+            <div class="md:col-span-2 flex flex-wrap gap-3 pt-2">
               <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
                 Simpan ke Database
+              </button>
+              <button type="button" onclick="cetakDariForm()" class="px-5 py-2.5 bg-slate-100 text-slate-700 border border-slate-300 rounded-md font-medium hover:bg-slate-200 transition flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                Cetak Disposisi
               </button>
             </div>
           </form>
@@ -217,31 +228,31 @@
       <p>LEMBAR DISPOSISI INTERNAL</p>
     </div>
 
-    <table style="width: 100%; border: none; margin-bottom: 15px;">
+    <table style="width: 100%; border: none; margin-bottom: 10px; font-size: 12px;">
       <tr>
-        <td style="width: 25%; padding: 4px; border:none;">No. Registrasi</td>
-        <td style="width: 2%; padding: 4px; border:none;">:</td>
-        <td style="width: 73%; padding: 4px; border:none;" id="print-noreg"></td>
+        <td style="width: 25%; padding: 2px; border:none;">No. Registrasi</td>
+        <td style="width: 2%; padding: 2px; border:none;">:</td>
+        <td style="width: 73%; padding: 2px; border:none;" id="print-noreg"></td>
       </tr>
       <tr>
-        <td style="padding: 4px; border:none;">Tanggal Terima</td>
-        <td style="padding: 4px; border:none;">:</td>
-        <td style="padding: 4px; border:none;" id="print-tgl"></td>
+        <td style="padding: 2px; border:none;">Tanggal Terima</td>
+        <td style="padding: 2px; border:none;">:</td>
+        <td style="padding: 2px; border:none;" id="print-tgl"></td>
       </tr>
       <tr>
-        <td style="padding: 4px; border:none;">Pengirim</td>
-        <td style="padding: 4px; border:none;">:</td>
-        <td style="padding: 4px; border:none;" id="print-pengirim"></td>
+        <td style="padding: 2px; border:none;">Pengirim</td>
+        <td style="padding: 2px; border:none;">:</td>
+        <td style="padding: 2px; border:none;" id="print-pengirim"></td>
       </tr>
       <tr>
-        <td style="padding: 4px; border:none;">Perihal</td>
-        <td style="padding: 4px; border:none;">:</td>
-        <td style="padding: 4px; border:none;" id="print-perihal"></td>
+        <td style="padding: 2px; border:none;">Perihal</td>
+        <td style="padding: 2px; border:none;">:</td>
+        <td style="padding: 2px; border:none;" id="print-perihal"></td>
       </tr>
       <tr>
-        <td style="padding: 4px; border:none;">No. Surat</td>
-        <td style="padding: 4px; border:none;">:</td>
-        <td style="padding: 4px; border:none;" id="print-nosurat"></td>
+        <td style="padding: 2px; border:none;">No. Surat</td>
+        <td style="padding: 2px; border:none;">:</td>
+        <td style="padding: 2px; border:none;" id="print-nosurat"></td>
       </tr>
     </table>
 
@@ -258,13 +269,13 @@
       </tbody>
     </table>
 
-    <div style="margin-top: 20px;">
+    <div style="margin-top: 10px; font-size: 12px;">
       <b>Catatan :</b>
-      <div style="min-height: 80px; border: 1px dashed black; padding: 10px; margin-top: 5px; margin-bottom: 50px;"></div>
+      <div style="min-height: 50px; border: 1px dashed black; padding: 10px; margin-top: 5px; margin-bottom: 15px;"></div>
     </div>
 
-    <div style="text-align: right; margin-top: 40px;">
-      <p style="margin-bottom: 60px;">Kendari, ....................................</p>
+    <div style="text-align: right; margin-top: 15px; font-size: 12px;">
+      <p style="margin-bottom: 40px;">Kendari, ....................................</p>
       <p style="margin: 0; font-weight: bold;">Gede Erry Eka Karisma, S.H</p>
       <p style="margin: 0;"><i>Representative Office Manager</i></p>
     </div>
@@ -362,15 +373,38 @@
       document.getElementById('confirmModal').classList.remove('flex');
     };
 
+    // Fungsi Cetak Disposisi dari Tabel Arsip
     window.cetakDisposisi = function(id) {
       const surat = dataMasuk.find(s => s.id === id);
       if(!surat) return showToast('Data tidak ditemukan', 'error');
 
-      document.getElementById('print-noreg').textContent = surat.noReg || '-';
-      document.getElementById('print-tgl').textContent = surat.tglTerima || '-';
-      document.getElementById('print-pengirim').textContent = surat.pengirim || '-';
-      document.getElementById('print-perihal').textContent = surat.perihal || '-';
-      document.getElementById('print-nosurat').textContent = surat.noSurat || '-';
+      siapkanLembarCetak(surat.noReg, surat.tglTerima, surat.pengirim, surat.perihal, surat.noSurat);
+      window.print();
+    };
+
+    // Fungsi Cetak Disposisi Langsung dari Form Input
+    window.cetakDariForm = function() {
+      const noReg = document.getElementById('sm-noreg').value;
+      const tglTerima = document.getElementById('sm-tgl').value;
+      const noSurat = document.getElementById('sm-nosurat').value;
+      const pengirim = document.getElementById('sm-pengirim').value;
+      const perihal = document.getElementById('sm-perihal').value;
+
+      if (!noReg || !tglTerima || !pengirim || !perihal) {
+        return showToast('Mohon lengkapi data form terlebih dahulu sebelum mencetak', 'error');
+      }
+
+      siapkanLembarCetak(noReg, tglTerima, pengirim, perihal, noSurat);
+      window.print();
+    };
+
+    // Helper untuk mengisi data ke template cetak
+    function siapkanLembarCetak(noReg, tglTerima, pengirim, perihal, noSurat) {
+      document.getElementById('print-noreg').textContent = noReg || '-';
+      document.getElementById('print-tgl').textContent = tglTerima || '-';
+      document.getElementById('print-pengirim').textContent = pengirim || '-';
+      document.getElementById('print-perihal').textContent = perihal || '-';
+      document.getElementById('print-nosurat').textContent = noSurat || '-';
 
       const body = document.getElementById('print-dispo-body');
       body.innerHTML = '';
@@ -383,9 +417,7 @@
           </tr>
         `;
       });
-
-      window.print();
-    };
+    }
 
     window.exportExcel = function(type) {
       let data = type === 'masuk' ? dataMasuk : dataKeluar;

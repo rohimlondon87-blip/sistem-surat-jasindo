@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Tata Usaha - Jasindo Kendari</title>
+  <title>Sistem Administrasi Surat - Jasindo Kendari</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
+  
   <style>
+    /* Styling khusus untuk cetakan (Print) agar pas setengah A4 */
     @media print {
       @page {
         size: A4 portrait;
-        margin: 1cm; /* Margin diperkecil agar ruang lega dan pas setengah halaman */
+        margin: 1cm;
       }
       body { background: white; font-family: "Times New Roman", Times, serif; font-size: 12px; }
       .no-print { display: none !important; }
@@ -36,6 +39,7 @@
       .print-header p { margin: 0; font-size: 13px; font-weight: bold; }
     }
     
+    /* Sembunyikan area cetak di layar biasa */
     @media screen {
       .print-only { display: none !important; }
     }
@@ -50,7 +54,6 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
   <div class="no-print min-h-screen flex flex-col">
-    <!-- Header -->
     <header class="bg-blue-700 text-white shadow-md">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="text-center md:text-left">
@@ -91,6 +94,11 @@
               <label class="block text-sm font-medium text-slate-700 mb-1">Perihal</label>
               <input type="text" id="sm-perihal" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700 mb-1">Upload Dokumen / Foto (Opsional, Maks 3MB)</label>
+              <!-- input capture="environment" memungkinkan buka kamera langsung di HP -->
+              <input type="file" id="sm-file" accept="image/*,application/pdf" capture="environment" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            </div>
             <div class="md:col-span-2 flex flex-wrap gap-3 pt-2">
               <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
@@ -126,6 +134,7 @@
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tgl Terima</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Pengirim</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Perihal</th>
+                  <th class="px-4 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Dokumen</th>
                   <th class="px-4 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Aksi</th>
                 </tr>
               </thead>
@@ -166,6 +175,11 @@
               <label class="block text-sm font-medium text-slate-700 mb-1">Perihal</label>
               <input type="text" id="sk-perihal" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700 mb-1">Upload Dokumen / Foto (Opsional, Maks 3MB)</label>
+              <!-- input capture="environment" memungkinkan buka kamera langsung di HP -->
+              <input type="file" id="sk-file" accept="image/*,application/pdf" capture="environment" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            </div>
             <div class="md:col-span-2 flex gap-3 pt-2">
               <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
@@ -197,6 +211,7 @@
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tanggal</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tujuan</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Perihal</th>
+                  <th class="px-4 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Dokumen</th>
                   <th class="px-4 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Aksi</th>
                 </tr>
               </thead>
@@ -292,7 +307,7 @@
   <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <script>
-    // URL Web App Google Sheets Anda 
+    // URL Web App Google Sheets (Ganti URL ini jika deploy ulang GAS menghasilkan URL baru)
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkwjrKzczJxnTTc5PGxejJYz3ypsom_XpsU1nb243W8mGLyBocW7Ubk5jKuJBCKhMvMg/exec';
 
     // Variabel Global
@@ -311,6 +326,7 @@
       ['', 'Lainnya :']
     ];
 
+    // Fungsi Pindah Tab
     window.switchTab = function(tabName) {
       const tabM = document.getElementById('tab-masuk');
       const tabK = document.getElementById('tab-keluar');
@@ -330,6 +346,7 @@
       }
     };
 
+    // Fungsi Notifikasi UI (Toast)
     window.showToast = function(message, type = 'success') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
@@ -382,9 +399,8 @@
       const perihal = document.getElementById('sm-perihal').value;
 
       if (!noReg || !tglTerima || !pengirim || !perihal) {
-        return showToast('Mohon lengkapi data form terlebih dahulu sebelum mencetak', 'error');
+        return showToast('Lengkapi form terlebih dahulu', 'error');
       }
-
       siapkanLembarCetak(noReg, tglTerima, pengirim, perihal, noSurat);
       window.print();
     };
@@ -408,6 +424,46 @@
         `;
       });
     }
+
+    // Fungsi konversi File/Gambar menjadi text Base64 agar bisa dikirim ke server
+    function getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+          if ((encoded.length % 4) > 0) {
+            encoded += '='.repeat(4 - (encoded.length % 4));
+          }
+          resolve(encoded);
+        };
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    window.setAutoNumberAndDate = function() {
+      const today = new Date().toISOString().split('T')[0];
+      if (!document.getElementById('sm-tgl').value) document.getElementById('sm-tgl').value = today;
+      if (!document.getElementById('sk-tgl').value) document.getElementById('sk-tgl').value = today;
+
+      const now = new Date();
+      const year = now.getFullYear();
+      const romans = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+      const monthRomawi = romans[now.getMonth()]; 
+
+      let maxSeq = 0;
+      dataKeluar.forEach(row => {
+        if (row.noSurat && row.noSurat.includes(`/${year}`)) {
+          const parts = row.noSurat.split('/');
+          const seqNum = parseInt(parts[0], 10);
+          if (!isNaN(seqNum) && seqNum > maxSeq) {
+            maxSeq = seqNum;
+          }
+        }
+      });
+      const nextSeq = String(maxSeq + 1).padStart(3, '0');
+      document.getElementById('sk-nosurat').value = `${nextSeq}/517/AJI/${monthRomawi}/${year}`;
+    };
 
     window.exportExcel = function(type) {
       let data = type === 'masuk' ? dataMasuk : dataKeluar;
@@ -447,47 +503,29 @@
       showToast('Berhasil mengunduh Excel (.csv)');
     };
 
-    window.setAutoNumberAndDate = function() {
-      const today = new Date().toISOString().split('T')[0];
-      if (!document.getElementById('sm-tgl').value) document.getElementById('sm-tgl').value = today;
-      if (!document.getElementById('sk-tgl').value) document.getElementById('sk-tgl').value = today;
-
-      const now = new Date();
-      const year = now.getFullYear();
-      const romans = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-      const monthRomawi = romans[now.getMonth()];
-
-      let maxSeq = 0;
-      dataKeluar.forEach(row => {
-        if (row.noSurat && row.noSurat.includes(`/${year}`)) {
-          const parts = row.noSurat.split('/');
-          const seqNum = parseInt(parts[0], 10);
-          if (!isNaN(seqNum) && seqNum > maxSeq) {
-            maxSeq = seqNum;
-          }
-        }
-      });
-
-      const nextSeq = String(maxSeq + 1).padStart(3, '0');
-      document.getElementById('sk-nosurat').value = `${nextSeq}/517/AJI/${monthRomawi}/${year}`;
-    };
-
     function renderTabelMasuk() {
       const tbody = document.getElementById('tableBodyMasuk');
       tbody.innerHTML = '';
       if(dataMasuk.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-slate-500">Belum ada data surat masuk.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-slate-500">Belum ada data surat masuk.</td></tr>';
         return;
       }
       
       [...dataMasuk].reverse().forEach(row => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 transition";
+        
+        let linkDoc = '<span class="text-slate-400 text-xs italic">-</span>';
+        if(row.fileUrl && row.fileUrl.trim() !== '') {
+           linkDoc = `<a href="${row.fileUrl}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-emerald-100 text-emerald-700 rounded hover:bg-emerald-200 transition text-xs font-medium"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>Lihat</a>`;
+        }
+
         tr.innerHTML = `
           <td class="px-4 py-3 text-sm text-slate-800 font-medium">${row.noReg}</td>
           <td class="px-4 py-3 text-sm text-slate-600">${row.tglTerima}</td>
           <td class="px-4 py-3 text-sm text-slate-600">${row.pengirim}</td>
           <td class="px-4 py-3 text-sm text-slate-600">${row.perihal}</td>
+          <td class="px-4 py-3 text-sm text-center">${linkDoc}</td>
           <td class="px-4 py-3 text-sm text-right space-x-1 whitespace-nowrap">
             <button onclick="cetakDisposisi('${row.id}')" class="inline-flex items-center px-2.5 py-1.5 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition text-xs font-medium">Cetak</button>
             <button onclick="promptDelete('${row.id}', 'masuk')" class="inline-flex items-center px-2.5 py-1.5 bg-red-100 text-red-700 rounded hover:bg-red-200 transition text-xs font-medium">Hapus</button>
@@ -501,18 +539,25 @@
       const tbody = document.getElementById('tableBodyKeluar');
       tbody.innerHTML = '';
       if(dataKeluar.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-slate-500">Belum ada data surat keluar.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-slate-500">Belum ada data surat keluar.</td></tr>';
         return;
       }
 
       [...dataKeluar].reverse().forEach(row => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 transition";
+        
+        let linkDoc = '<span class="text-slate-400 text-xs italic">-</span>';
+        if(row.fileUrl && row.fileUrl.trim() !== '') {
+           linkDoc = `<a href="${row.fileUrl}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-emerald-100 text-emerald-700 rounded hover:bg-emerald-200 transition text-xs font-medium"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>Lihat</a>`;
+        }
+
         tr.innerHTML = `
           <td class="px-4 py-3 text-sm text-slate-800 font-medium">${row.noSurat}</td>
           <td class="px-4 py-3 text-sm text-slate-600">${row.tglSurat}</td>
           <td class="px-4 py-3 text-sm text-slate-600">${row.tujuan}</td>
           <td class="px-4 py-3 text-sm text-slate-600">${row.perihal}</td>
+          <td class="px-4 py-3 text-sm text-center">${linkDoc}</td>
           <td class="px-4 py-3 text-sm text-right whitespace-nowrap">
             <button onclick="promptDelete('${row.id}', 'keluar')" class="inline-flex items-center px-2.5 py-1.5 bg-red-100 text-red-700 rounded hover:bg-red-200 transition text-xs font-medium">Hapus</button>
           </td>
@@ -540,15 +585,33 @@
         setAutoNumberAndDate();
       } catch (err) {
         console.error("Error Fetch:", err);
-        document.getElementById('loadingMasuk').innerHTML = "<span class='text-red-500'>Gagal memuat data dari Google Sheets. Pastikan URL benar.</span>";
-        document.getElementById('loadingKeluar').innerHTML = "<span class='text-red-500'>Gagal memuat data dari Google Sheets.</span>";
+        document.getElementById('loadingMasuk').innerHTML = "<span class='text-red-500'>Gagal memuat data dari server.</span>";
+        document.getElementById('loadingKeluar').innerHTML = "<span class='text-red-500'>Gagal memuat data dari server.</span>";
       }
     };
 
+    // Listener Form Surat Masuk (Upload + Simpan)
     document.getElementById('formSuratMasuk').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = e.target.querySelector('button');
-      btn.disabled = true; btn.innerHTML = 'Menyimpan...';
+      btn.disabled = true; btn.innerHTML = 'Menyimpan & Mengunggah... (Tunggu)';
+
+      const fileInput = document.getElementById('sm-file');
+      let fileBase64 = "";
+      let fileName = "";
+      let mimeType = "";
+
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.size > 3 * 1024 * 1024) {
+          showToast('Ukuran file maksimal 3MB!', 'error');
+          btn.disabled = false; btn.innerHTML = 'Simpan ke Database';
+          return;
+        }
+        fileName = file.name;
+        mimeType = file.type;
+        fileBase64 = await getBase64(file);
+      }
 
       const payload = {
         action: 'add',
@@ -558,6 +621,9 @@
         noSurat: document.getElementById('sm-nosurat').value,
         pengirim: document.getElementById('sm-pengirim').value,
         perihal: document.getElementById('sm-perihal').value,
+        fileBase64: fileBase64,
+        fileName: fileName,
+        mimeType: mimeType
       };
 
       try {
@@ -567,7 +633,8 @@
           body: JSON.stringify(payload)
         });
         e.target.reset();
-        showToast('Surat Masuk berhasil disimpan');
+        document.getElementById('sm-file').value = ""; // Bersihkan file
+        showToast('Surat Masuk & Dokumen berhasil disimpan');
         fetchSemuaData();
       } catch(err) {
         showToast('Gagal menyimpan ke server', 'error');
@@ -576,10 +643,28 @@
       }
     });
 
+    // Listener Form Surat Keluar (Upload + Simpan)
     document.getElementById('formSuratKeluar').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = e.target.querySelector('button');
-      btn.disabled = true; btn.innerHTML = 'Menyimpan...';
+      btn.disabled = true; btn.innerHTML = 'Menyimpan & Mengunggah... (Tunggu)';
+
+      const fileInput = document.getElementById('sk-file');
+      let fileBase64 = "";
+      let fileName = "";
+      let mimeType = "";
+
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.size > 3 * 1024 * 1024) {
+          showToast('Ukuran file maksimal 3MB!', 'error');
+          btn.disabled = false; btn.innerHTML = 'Simpan Surat Keluar';
+          return;
+        }
+        fileName = file.name;
+        mimeType = file.type;
+        fileBase64 = await getBase64(file);
+      }
 
       const payload = {
         action: 'add',
@@ -589,6 +674,9 @@
         tujuan: document.getElementById('sk-tujuan').value,
         keterangan: document.getElementById('sk-ket').value,
         perihal: document.getElementById('sk-perihal').value,
+        fileBase64: fileBase64,
+        fileName: fileName,
+        mimeType: mimeType
       };
 
       try {
@@ -598,7 +686,8 @@
           body: JSON.stringify(payload)
         });
         e.target.reset();
-        showToast('Surat Keluar berhasil disimpan');
+        document.getElementById('sk-file').value = ""; // Bersihkan file
+        showToast('Surat Keluar & Dokumen berhasil disimpan');
         fetchSemuaData();
       } catch(err) {
         showToast('Gagal menyimpan ke server', 'error');
@@ -607,9 +696,9 @@
       }
     });
 
+    // Listener Hapus Data
     document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
       if(!itemToDelete) return;
-      
       const btn = document.getElementById('confirmDeleteBtn');
       const originalText = btn.innerHTML;
       btn.innerHTML = 'Menghapus...';
@@ -638,7 +727,6 @@
       }
     });
 
-    // Mulai Ambil Data saat halaman dimuat
     document.addEventListener('DOMContentLoaded', () => {
       setAutoNumberAndDate(); 
       fetchSemuaData();

@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Administrasi Surat - Jasindo Kendari</title>
-  
+  <title>Sistem Tata Usaha - Jasindo Kendari</title>
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
-    /* Styling khusus untuk cetakan (Print) agar pas setengah A4 */
+    /* Styling khusus untuk cetakan (Print) - Format A5 / Setengah A4 */
     @media print {
       @page {
         size: A4 portrait;
@@ -54,6 +53,7 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
   <div class="no-print min-h-screen flex flex-col">
+    <!-- Header -->
     <header class="bg-blue-700 text-white shadow-md">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="text-center md:text-left">
@@ -67,10 +67,13 @@
       </div>
     </header>
 
+    <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
       
       <!-- ================= TAB SURAT MASUK ================= -->
       <div id="content-masuk" class="space-y-6 block">
+        
+        <!-- Form Surat Masuk -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
           <h2 class="text-lg font-semibold text-slate-800 mb-4">Input Surat Masuk Baru</h2>
           <form id="formSuratMasuk" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -96,7 +99,6 @@
             </div>
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-slate-700 mb-1">Upload Dokumen / Foto (Opsional, Maks 3MB)</label>
-              <!-- input capture="environment" memungkinkan buka kamera langsung di HP -->
               <input type="file" id="sm-file" accept="image/*,application/pdf" capture="environment" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
             </div>
             <div class="md:col-span-2 flex flex-wrap gap-3 pt-2">
@@ -112,6 +114,7 @@
           </form>
         </div>
 
+        <!-- Tabel Surat Masuk -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 overflow-hidden">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
             <h2 class="text-lg font-semibold text-slate-800">Arsip Surat Masuk</h2>
@@ -152,11 +155,13 @@
 
       <!-- ================= TAB SURAT KELUAR ================= -->
       <div id="content-keluar" class="space-y-6 hidden">
+        
+        <!-- Form Surat Keluar -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
           <h2 class="text-lg font-semibold text-slate-800 mb-4">Input Surat Keluar Baru</h2>
           <form id="formSuratKeluar" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">No. Surat Keluar (Otomatis)</label>
+              <label class="block text-sm font-medium text-slate-700 mb-1">No. Surat Keluar (Auto)</label>
               <input type="text" id="sk-nosurat" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-yellow-50">
             </div>
             <div>
@@ -177,7 +182,6 @@
             </div>
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-slate-700 mb-1">Upload Dokumen / Foto (Opsional, Maks 3MB)</label>
-              <!-- input capture="environment" memungkinkan buka kamera langsung di HP -->
               <input type="file" id="sk-file" accept="image/*,application/pdf" capture="environment" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
             </div>
             <div class="md:col-span-2 flex gap-3 pt-2">
@@ -189,6 +193,7 @@
           </form>
         </div>
 
+        <!-- Tabel Surat Keluar -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 overflow-hidden">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
             <h2 class="text-lg font-semibold text-slate-800">Arsip Surat Keluar</h2>
@@ -280,12 +285,12 @@
 
     <div style="margin-top: 10px; font-size: 12px;">
       <b>Catatan :</b>
-      <div style="min-height: 40px; border: 1px dashed black; padding: 5px; margin-top: 5px; margin-bottom: 10px;"></div>
+      <div style="min-height: 50px; border: 1px dashed black; padding: 10px; margin-top: 5px; margin-bottom: 15px;"></div>
     </div>
 
-    <!-- page-break-inside: avoid memastikan tanda tangan tidak terpisah ke halaman berikutnya -->
-    <div style="text-align: right; margin-top: 10px; font-size: 12px; page-break-inside: avoid;">
-      <p style="margin-bottom: 30px;">Kendari, ....................................</p>
+    <!-- page-break-inside: avoid menjaga tanda tangan tidak terpotong halaman -->
+    <div style="text-align: right; margin-top: 15px; font-size: 12px; page-break-inside: avoid;">
+      <p style="margin-bottom: 40px;">Kendari, ....................................</p>
       <p style="margin: 0; font-weight: bold;">Gede Erry Eka Karisma, S.H</p>
       <p style="margin: 0;"><i>Representative Office Manager</i></p>
     </div>
@@ -307,8 +312,10 @@
   <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <script>
-    // URL Web App Google Sheets (Ganti URL ini jika deploy ulang GAS menghasilkan URL baru)
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkwjrKzczJxnTTc5PGxejJYz3ypsom_XpsU1nb243W8mGLyBocW7Ubk5jKuJBCKhMvMg/exec';
+    // =========================================================================
+    // URL WEB APP GOOGLE SHEETS (FINAL - JANGAN DIUBAH LAGI)
+    // =========================================================================
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUMKzdXZpSHnMKntOmZZ-qrd55FhHjYGKfloaNrwebozC9qjPX4TPB4qqWJCRDthHyVQ/exec';
 
     // Variabel Global
     let dataMasuk = [];
@@ -326,7 +333,7 @@
       ['', 'Lainnya :']
     ];
 
-    // Fungsi Pindah Tab
+    // Utility UI (Switch Tab, Toast, Modal)
     window.switchTab = function(tabName) {
       const tabM = document.getElementById('tab-masuk');
       const tabK = document.getElementById('tab-keluar');
@@ -346,7 +353,6 @@
       }
     };
 
-    // Fungsi Notifikasi UI (Toast)
     window.showToast = function(message, type = 'success') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
@@ -384,13 +390,16 @@
       document.getElementById('confirmModal').classList.remove('flex');
     };
 
+    // Fungsi Cetak Disposisi dari Tabel Arsip
     window.cetakDisposisi = function(id) {
       const surat = dataMasuk.find(s => s.id === id);
       if(!surat) return showToast('Data tidak ditemukan', 'error');
+
       siapkanLembarCetak(surat.noReg, surat.tglTerima, surat.pengirim, surat.perihal, surat.noSurat);
       window.print();
     };
 
+    // Fungsi Cetak Disposisi Langsung dari Form Input
     window.cetakDariForm = function() {
       const noReg = document.getElementById('sm-noreg').value;
       const tglTerima = document.getElementById('sm-tgl').value;
@@ -399,12 +408,14 @@
       const perihal = document.getElementById('sm-perihal').value;
 
       if (!noReg || !tglTerima || !pengirim || !perihal) {
-        return showToast('Lengkapi form terlebih dahulu', 'error');
+        return showToast('Mohon lengkapi data form terlebih dahulu sebelum mencetak', 'error');
       }
+
       siapkanLembarCetak(noReg, tglTerima, pengirim, perihal, noSurat);
       window.print();
     };
 
+    // Helper untuk mengisi data ke template cetak
     function siapkanLembarCetak(noReg, tglTerima, pengirim, perihal, noSurat) {
       document.getElementById('print-noreg').textContent = noReg || '-';
       document.getElementById('print-tgl').textContent = tglTerima || '-';
@@ -425,7 +436,7 @@
       });
     }
 
-    // Fungsi konversi File/Gambar menjadi text Base64 agar bisa dikirim ke server
+    // Fungsi membaca File / Foto menjadi kode Base64 untuk dikirim
     function getBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -441,6 +452,7 @@
       });
     }
 
+    // Auto-Generate Nomor Surat & Default Tanggal
     window.setAutoNumberAndDate = function() {
       const today = new Date().toISOString().split('T')[0];
       if (!document.getElementById('sm-tgl').value) document.getElementById('sm-tgl').value = today;
@@ -502,6 +514,10 @@
       document.body.removeChild(link);
       showToast('Berhasil mengunduh Excel (.csv)');
     };
+
+    // ==========================================
+    // LOGIKA API GOOGLE SHEETS
+    // ==========================================
 
     function renderTabelMasuk() {
       const tbody = document.getElementById('tableBodyMasuk');
@@ -566,6 +582,7 @@
       });
     }
 
+    // Mengambil semua data dari Google Sheets (GET)
     window.fetchSemuaData = async function() {
       document.getElementById('loadingMasuk').style.display = 'flex';
       document.getElementById('loadingKeluar').style.display = 'flex';
@@ -582,7 +599,7 @@
         
         renderTabelMasuk();
         renderTabelKeluar();
-        setAutoNumberAndDate();
+        setAutoNumberAndDate(); 
       } catch (err) {
         console.error("Error Fetch:", err);
         const errorHtml = `
@@ -599,18 +616,18 @@
         document.getElementById('loadingMasuk').innerHTML = errorHtml;
         document.getElementById('loadingKeluar').innerHTML = errorHtml;
         
-        // Tetap inisialisasi agar form bisa diketik dan di-klik meskipun offline
+        // Tetap render apa adanya
         renderTabelMasuk();
         renderTabelKeluar();
         setAutoNumberAndDate();
       }
     };
 
-    // Listener Form Surat Masuk (Upload + Simpan)
+    // Submit Surat Masuk
     document.getElementById('formSuratMasuk').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.disabled = true; btn.innerHTML = 'Menyimpan & Mengunggah... (Tunggu)';
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.innerHTML = 'Menyimpan & Upload...';
 
       const fileInput = document.getElementById('sm-file');
       let fileBase64 = "";
@@ -620,7 +637,7 @@
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
         if (file.size > 3 * 1024 * 1024) {
-          showToast('Ukuran file maksimal 3MB!', 'error');
+          showToast('Ukuran file/foto maksimal 3MB!', 'error');
           btn.disabled = false; btn.innerHTML = 'Simpan ke Database';
           return;
         }
@@ -649,9 +666,9 @@
           body: JSON.stringify(payload)
         });
         e.target.reset();
-        document.getElementById('sm-file').value = ""; // Bersihkan file
+        document.getElementById('sm-file').value = "";
         showToast('Surat Masuk & Dokumen berhasil disimpan');
-        fetchSemuaData();
+        fetchSemuaData(); 
       } catch(err) {
         showToast('Gagal menyimpan ke server', 'error');
       } finally {
@@ -659,11 +676,11 @@
       }
     });
 
-    // Listener Form Surat Keluar (Upload + Simpan)
+    // Submit Surat Keluar
     document.getElementById('formSuratKeluar').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.disabled = true; btn.innerHTML = 'Menyimpan & Mengunggah... (Tunggu)';
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.innerHTML = 'Menyimpan & Upload...';
 
       const fileInput = document.getElementById('sk-file');
       let fileBase64 = "";
@@ -673,7 +690,7 @@
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
         if (file.size > 3 * 1024 * 1024) {
-          showToast('Ukuran file maksimal 3MB!', 'error');
+          showToast('Ukuran file/foto maksimal 3MB!', 'error');
           btn.disabled = false; btn.innerHTML = 'Simpan Surat Keluar';
           return;
         }
@@ -702,7 +719,7 @@
           body: JSON.stringify(payload)
         });
         e.target.reset();
-        document.getElementById('sk-file').value = ""; // Bersihkan file
+        document.getElementById('sk-file').value = "";
         showToast('Surat Keluar & Dokumen berhasil disimpan');
         fetchSemuaData();
       } catch(err) {
@@ -712,9 +729,10 @@
       }
     });
 
-    // Listener Hapus Data
+    // Hapus Data
     document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
       if(!itemToDelete) return;
+      
       const btn = document.getElementById('confirmDeleteBtn');
       const originalText = btn.innerHTML;
       btn.innerHTML = 'Menghapus...';
@@ -734,7 +752,7 @@
         });
         closeModal();
         showToast('Data berhasil dihapus');
-        fetchSemuaData();
+        fetchSemuaData(); 
       } catch(err) {
         showToast('Gagal menghapus data', 'error');
       } finally {
@@ -743,8 +761,9 @@
       }
     });
 
+    // Mulai Ambil Data saat halaman dimuat
     document.addEventListener('DOMContentLoaded', () => {
-      setAutoNumberAndDate(); 
+      setAutoNumberAndDate(); // Set nomor & tgl default awal
       fetchSemuaData();
     });
 
